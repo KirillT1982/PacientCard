@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>PacientsCard</title>
+</head>
+<body>
+  <div id="app">
+  <div class="container">
+    <div class="row header"> 
+      <div class="col-2">
+      <img  class="img-fluid" src="/image/motol.png" alt="">
+      </div>
+      <div class="col-10 header-title">
+        <h3 class="text-center">Fakultní Nemocnice Motol</h3>
+      </div>
+    </div>
+     <div class="row d-flex flex-row-reverse my-3">
+      <button type="button" class="btn btn-primary">Create</button>
+    </div>
+
+   <form>
+     <h4 class="text-center">New Pacient</h4>
+     <div class="row justify-content-center">
+      <div class="form-group col-5 ">
+       <label for="newName">Name</label>
+       <input v-model="newItem.name" type="text" class="form-control" id="newName" placeholder="Name">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+     <div class="form-group col-5">
+       <label for="newSurname">Surname</label>
+       <input v-model="newItem.surname" type="text" class="form-control" id="newSurname" placeholder="Surname">
+     </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="form-group col-5">
+        <label for="newDate">Date of Birth</label>
+        <input v-model="newItem.date" type="text" class="form-control" id="newDate" placeholder="Date of birth">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="form-group">
+        <h5>Diagnose</h5>
+        <div class="form-check">
+          <input v-model="newItem.diagnosies" class="form-check-input" value="stomatologie" type="checkbox" id="gridCheck">
+          <label  class="form-check-label" for="gridCheck">Stomatologie</label>
+       </div>
+        <div class="form-check">
+          <input v-model="newItem.diagnosies" class="form-check-input" value="pediatrie" type="checkbox" id="gridCheck">
+          <label  class="form-check-label" for="gridCheck">Pediatrie</label>
+        </div>
+        <div class="form-check">
+          <input v-model="newItem.diagnosies" class="form-check-input" value="chirurgie" type="checkbox" id="gridCheck">
+          <label  class="form-check-label" for="gridCheck">Chirurgie</label>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <button type="submit" @click.prevent="saveItem" class="d-flex justify-content-end btn btn-primary my-3">Sign
+        in</button>
+   </div>
+  </form>
+
+    <div class="row">
+      <table class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Diagnose</th>
+            <th scope="col d-flex flex-row-reverse">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(pacient, i) in pacients">
+            <td type="text">{{ pacient.name }}</td>
+            <td type="text">{{ pacient.surname }}</td>
+            <td type="date">{{ pacient.date }}</td>
+            <td><ul><li v-for diagnose in newItem.diagnosies>{{ pacient.diagnose }}</li></ul></td></td>>
+            <td><button type="button" class="btn btn-success btn-sm">View</button>
+              <button type="button" class="btn btn-danger btn-sm" @click="deleteItem(i)">Delete</button></td>
+          </tr>
+              </div>
+            </td>
+            </tr> 
+
+            
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script>
+  new Vue ({
+    el: '#app',
+    data: {
+      newItem: {
+       name: '',
+       surname: '',
+       date:'',
+       diagnosies: ''
+      },
+      pacients: [
+        { name: 'John', surname: 'Smith', date: '15.10.1968', diagnose: 'Stomatologie' },
+        { name: 'James', surname: 'Smoke', date: '10.08.1974', diagnose: 'Stomatologie' },
+        { name: 'Steve', surname: 'Donald', date: '26.05.1981', diagnose: 'Stomatologie' },
+      ]
+    },
+
+    methods: {
+      deleteItem: function(i) {
+      this.pacients.splice(i, 1);
+      },
+
+      saveItem: function() {
+      this.pacients.push({
+      name: this.newItem.name,
+      surname: this.newItem.surname,
+      date: this.newItem.date,
+      diagnose: this.newItem.diagnosies
+      });
+      this.newItem.name = '';
+      this.newItem.surname = '';
+      this.newItem.date = '';
+      this.newItem.diagnosies = '';
+      },
+    },
+
+  })
+  </script>
+</body>
+</html>
